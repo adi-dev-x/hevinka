@@ -69,7 +69,8 @@ export function Nav() {
         )}
       >
         <div className="mx-auto flex h-[var(--nav-h)] max-w-[1440px] items-center gap-6 px-5 sm:px-8 lg:px-14">
-          <TransitionLink href="/" aria-label="HEVINKA Technologies — home" className="relative z-[2] text-[13px] sm:text-[15px]">
+          <TransitionLink href="/" className="relative z-[2] text-[13px] sm:text-[15px]">
+            <span className="sr-only">Home — </span>
             <span className="sm:hidden">
               <Logo variant="dark" compact />
             </span>

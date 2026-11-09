@@ -18,7 +18,7 @@ function Tile({ i, compact = false }: { i: number; compact?: boolean }) {
   const s = approach.steps[i];
   return (
     <div className={clsx("relative shrink-0", compact ? "w-24" : "w-full")}>
-      <span className="ap-badge absolute -top-4 left-1/2 z-[1] grid size-9 -translate-x-1/2 place-items-center rounded-full bg-royal font-mono text-xs font-medium text-white shadow-[0_0_16px_rgb(0_168_252/0.5)] ring-2 ring-navy">
+      <span className="ap-badge absolute -top-4 left-1/2 z-[1] grid size-9 -translate-x-1/2 place-items-center rounded-full bg-cobalt font-mono text-xs font-medium text-white shadow-[0_0_16px_rgb(0_168_252/0.5)] ring-2 ring-navy">
         {String(i + 1).padStart(2, "0")}
       </span>
       <div className="ap-chev relative aspect-[1/1.05] bg-electric/50 [clip-path:polygon(0_0,calc(100%-18%)_0,100%_50%,calc(100%-18%)_100%,0_100%,18%_50%)]">
@@ -96,10 +96,10 @@ export function ApproachRail() {
           <ol className="ap-track flex w-max gap-6 pl-[max(3.5rem,calc((100vw-1440px)/2+3.5rem))] pr-24 will-change-transform">
             {approach.steps.map((s, i) => (
               <li key={s.title} className="ap-step group/step w-[clamp(150px,13vw,200px)] pt-4">
-                <div className="transition-[transform,opacity,filter] duration-700 ease-[var(--ease-expo)] [.ap-step:not(.is-active)_&]:opacity-35 [.ap-step.is-active_&]:-translate-y-3 [.ap-step.is-active_&]:drop-shadow-[0_0_24px_rgb(0_168_252/0.55)]">
+                <div className="transition-[transform,opacity,filter] duration-700 ease-[var(--ease-expo)] [.ap-step:not(.is-active)_&]:opacity-70 [.ap-step.is-active_&]:-translate-y-3 [.ap-step.is-active_&]:drop-shadow-[0_0_24px_rgb(0_168_252/0.55)]">
                   <Tile i={i} />
                 </div>
-                <div className="mt-6 transition-opacity duration-700 [.ap-step:not(.is-active)_&]:opacity-35">
+                <div className="mt-6 transition-opacity duration-700 [.ap-step:not(.is-active)_&]:opacity-60">
                   <p className="font-display text-sm font-bold uppercase tracking-[0.14em] text-electric">{s.title}</p>
                   <span className="mt-2 block h-0.5 w-8 bg-electric/60" />
                   <p className="mt-3 text-[0.95rem] leading-snug text-white/80">{s.text}</p>

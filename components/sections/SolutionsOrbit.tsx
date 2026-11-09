@@ -117,7 +117,7 @@ export function SolutionsOrbit() {
                     >
                       <TransitionLink
                         href={`/solutions/${sol.slug}`}
-                        aria-label={sol.title}
+                        aria-label={`${sol.number} ${sol.title}`}
                         tabIndex={-1}
                         className="orb-node-inner group/n relative grid size-full place-items-center rounded-full border border-electric/40 bg-midnight text-ion shadow-[0_0_calc(var(--near,0)*40px)_rgb(0_168_252/0.6)] transition-colors hover:border-ion"
                       >
@@ -165,7 +165,7 @@ export function SolutionsOrbit() {
               </div>
             </div>
             {/* Progress dots — also keyboard navigation through the pinned steps */}
-            <div className="mt-10 flex items-center gap-2.5" role="group" aria-label="Choose a solution">
+            <div className="mt-10 flex items-center gap-1" role="group" aria-label="Choose a solution">
               {solutions.map((sol, i) => (
                 <button
                   key={sol.slug}
@@ -173,11 +173,15 @@ export function SolutionsOrbit() {
                   onClick={() => goTo(i)}
                   aria-label={sol.title}
                   aria-current={i === active ? "true" : undefined}
-                  className={clsx(
-                    "h-1.5 rounded-full transition-all duration-500 ease-[var(--ease-expo)]",
-                    i === active ? "w-10 bg-electric" : "w-1.5 bg-white/25 hover:bg-white/60",
-                  )}
-                />
+                  className="group/dot grid h-6 min-w-6 place-items-center"
+                >
+                  <span
+                    className={clsx(
+                      "block h-1.5 rounded-full transition-all duration-500 ease-[var(--ease-expo)]",
+                      i === active ? "w-10 bg-electric" : "w-1.5 bg-white/25 group-hover/dot:bg-white/60",
+                    )}
+                  />
+                </button>
               ))}
             </div>
           </div>

@@ -17,3 +17,5 @@ export const LazyRentalRing = dynamic(() => import("./SolutionVisuals").then((m)
 export const LazyRouteMap = dynamic(() => import("./SolutionVisuals").then((m) => m.RouteMap), { ssr: false, loading: box("300 / 170") });
 export const LazyApiHub = dynamic(() => import("./SolutionVisuals").then((m) => m.ApiHub), { ssr: false, loading: box("1 / 1") });
 export const LazyGrowthEngine = dynamic(() => import("./SolutionVisuals").then((m) => m.GrowthEngine), { ssr: false, loading: box("1 / 1") });
+export const LazyIntegrationWheel = dynamic(() => import("./SolutionVisuals").then((m) => m.IntegrationWheel), { ssr: false, loading: box("1 / 1") });
+export const LazyWebDevices = dynamic(() => import("./SolutionVisuals").then((m) => m.WebDevices), { ssr: false, loading: box("10 / 9") });

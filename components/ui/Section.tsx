@@ -62,7 +62,9 @@ export function Section({
           gsap.fromTo(
             ".section-morph",
             { opacity: 1 },
-            { opacity: 0, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "top 72%", scrub: true } },
+            // immediateRender:false — the tint only applies once the section starts entering, so sections
+            // further down keep their true colours (and contrast) until they arrive.
+            { opacity: 0, ease: "none", immediateRender: false, scrollTrigger: { trigger: ref.current, start: "top bottom", end: "top 72%", scrub: true } },
           );
         }
         if (cut === "none" || !animateCut) return;
@@ -105,7 +107,7 @@ export function Section({
       {morph && (
         <div
           aria-hidden
-          className={clsx("section-morph pointer-events-none absolute inset-0 -z-10 opacity-0", tone === "mist" || tone === "white" ? "bg-sky/70" : "bg-cobalt")}
+          className={clsx("section-morph pointer-events-none absolute inset-0 -z-10 opacity-0", tone === "mist" || tone === "white" ? "bg-sky/45" : "bg-cobalt")}
         />
       )}
       {children}

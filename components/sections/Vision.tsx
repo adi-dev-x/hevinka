@@ -13,7 +13,7 @@ import { LabelStack } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
 import { CountUp } from "@/components/motion/CountUp";
 
-const TAB = { navy: "bg-navy", royal: "bg-royal", sky: "bg-sky" } as const;
+const TAB = { navy: "bg-navy", royal: "bg-royal", sky: "bg-sky !text-abyss" } as const;
 
 /** §3 — Vision · Mission · Core Philosophy chevron-tab cards + the Connected Operating Model (brochure p.2). */
 export function Vision() {
@@ -45,8 +45,7 @@ export function Vision() {
         nodes.forEach((n, i) => {
           const at = (i / (nodes.length - 1)) * 0.96;
           tl.to(n.querySelector(".om-glow"), { opacity: 1, scale: 1, duration: 0.06 }, at)
-            .to(n.querySelector(".om-icon"), { color: "#ffffff", duration: 0.06 }, at)
-            .fromTo(n.querySelector(".om-text"), { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.06 }, at);
+            .to(n.querySelector(".om-icon"), { color: "#ffffff", duration: 0.06 }, at);
         });
       });
     },

@@ -1,6 +1,6 @@
 // Section QA: viewport screenshots at chosen scroll points, after scrolling there gradually so
 // scrubbed/pinned timelines settle. Points are "selector" or "selector+N" (N = extra viewport heights).
-// node scripts/section-shots.mjs <outDir> <width> "<sel>[+N]" ...
+// PAGE=/route node scripts/section-shots.mjs <outDir> <width> "<sel>[+N]" ...  (PAGE defaults to /)
 import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
@@ -13,7 +13,7 @@ await ctx.addInitScript(() => sessionStorage.setItem("hv-visited", "1"));
 const page = await ctx.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
-await page.goto("http://localhost:3100/", { waitUntil: "networkidle" });
+await page.goto(`http://localhost:3100${process.env.PAGE ?? "/"}`, { waitUntil: "networkidle" });
 await page.waitForTimeout(1500);
 let n = 0;
 for (const pt of points) {

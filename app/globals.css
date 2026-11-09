@@ -287,6 +287,15 @@ html.preload .preloader {
 }
 
 /* Ecosystem core: rotating glow ring */
+/* Gentle hover-in-place for decorative chips (disabled by the reduced-motion block below). */
+.float-y {
+  animation: float-y 6s ease-in-out infinite;
+}
+@keyframes float-y {
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
 .eco-spin {
   animation: spin 9s linear infinite;
 }

@@ -6,9 +6,10 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
-import { useGSAP } from "@gsap/react";
+import { useGSAP as useGSAPBase } from "@gsap/react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
+gsap.registerPlugin(useGSAPBase, ScrollTrigger, DrawSVGPlugin);
 
 // Brand ease: cubic-bezier(0.16, 1, 0.3, 1) ≈ expo.out — aliased so components can say ease: "hevinka".
 gsap.registerEase("hevinka", gsap.parseEase("expo.out"));
@@ -54,4 +55,36 @@ export async function loadMorphSVG() {
   return MorphSVGPlugin;
 }
 
+/**
+ * Motion gate: inside a <DeferMotion> boundary, animation setup waits until the section is near the
+ * viewport (or the browser is idle), so the page doesn't build every tween/ScrollTrigger during hydration.
+ */
+export type MotionGate = { open: boolean; subscribe: (cb: () => void) => () => void; release: () => void };
+export const MotionGateContext = createContext<MotionGate | null>(null);
+
+type GSAPConfig = { scope?: React.RefObject<Element | null> | Element | string; dependencies?: unknown[]; revertOnUpdate?: boolean };
+type ContextFunc = Extract<Parameters<typeof useGSAPBase>[0], (...args: never[]) => unknown>;
+
+/** useGSAP from @gsap/react, gated by the nearest <DeferMotion> (runs immediately when there is none). */
+function useGSAP(fn: ContextFunc, config: GSAPConfig = {}) {
+  const gate = useContext(MotionGateContext);
+  const [released, setReleased] = useState(false);
+  const open = !gate || gate.open || released;
+  useEffect(() => {
+    if (!gate || gate.open) return;
+    return gate.subscribe(() => setReleased(true));
+  }, [gate]);
+  return useGSAPBase(
+    (context, contextSafe) => {
+      if (open) return fn(context, contextSafe);
+    },
+    { ...config, dependencies: [...(config.dependencies ?? []), open] } as Parameters<typeof useGSAPBase>[1],
+  );
+}
+
 export { gsap, ScrollTrigger, DrawSVGPlugin, useGSAP };
+
+// QA hook: `?debug-motion` exposes ScrollTrigger for inspecting trigger positions in production builds.
+if (typeof window !== "undefined" && window.location.search.includes("debug-motion")) {
+  (window as unknown as { ScrollTrigger: typeof ScrollTrigger }).ScrollTrigger = ScrollTrigger;
+}

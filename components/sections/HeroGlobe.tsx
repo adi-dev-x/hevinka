@@ -52,6 +52,8 @@ export function HeroGlobe() {
   const [globe, setGlobe] = useState<{ mobile: boolean } | null>(null);
   const [active, setActive] = useState(true);
   const [paused, setPaused] = useState(false);
+  const [canvasGen, setCanvasGen] = useState(0);
+  const released = useRef(false);
   const posterMode = useSyncExternalStore(noopSubscribe, isPosterMode, () => false);
 
   // Wire the controller to the DOM.
@@ -68,16 +70,29 @@ export function HeroGlobe() {
       if (hasWebGL2()) setGlobe({ mobile: window.matchMedia("(max-width: 767px)").matches });
       else document.documentElement.classList.add("no-webgl");
     };
-    const schedule = () => {
-      if ("requestIdleCallback" in window) idle = window.requestIdleCallback(go, { timeout: 1800 });
-      else idle = globalThis.setTimeout(go, 700) as unknown as number;
+    // three.js + shader compile is the page's heaviest main-thread work. The poster is a frame of the same
+    // scene, so the live globe swaps in on the first sign of intent (or after a quiet 8s), keeping the
+    // initial load and first interactions light.
+    const INTENT = ["pointermove", "pointerdown", "wheel", "touchstart", "keydown", "scroll"] as const;
+    let fallback = 0;
+    const start = () => {
+      INTENT.forEach((e) => window.removeEventListener(e, start));
+      clearTimeout(fallback);
+      if ("requestIdleCallback" in window) idle = window.requestIdleCallback(go, { timeout: 1200 });
+      else idle = globalThis.setTimeout(go, 300) as unknown as number;
     };
-    // Wait for the preloader handoff AND the window load event (poster painted = LCP done), then idle.
+    const schedule = () => {
+      INTENT.forEach((e) => window.addEventListener(e, start, { passive: true, once: true }));
+      fallback = globalThis.setTimeout(start, 8000) as unknown as number;
+    };
+    // Wait for the preloader handoff AND the window load event (poster painted = LCP done).
     const afterLoad = () => (document.readyState === "complete" ? schedule() : window.addEventListener("load", schedule, { once: true }));
     const off = onSiteReady(afterLoad);
     return () => {
       off();
       window.removeEventListener("load", schedule);
+      INTENT.forEach((e) => window.removeEventListener(e, start));
+      clearTimeout(fallback);
       if ("cancelIdleCallback" in window) window.cancelIdleCallback(idle);
     };
   }, []);
@@ -101,6 +116,28 @@ export function HeroGlobe() {
     window.addEventListener("pointermove", move, { passive: true });
     return () => window.removeEventListener("pointermove", move);
   }, [ctrl]);
+
+  // Next keeps visited routes mounted but hidden (React Activity): when the hero hides or unmounts,
+  // release its WebGL context and restore the poster; when it's shown again, remount a fresh canvas.
+  useEffect(() => {
+    let raf = 0;
+    if (released.current) {
+      released.current = false;
+      raf = requestAnimationFrame(() => setCanvasGen((g) => g + 1));
+    }
+    const layer = canvasLayer.current;
+    const posterEl = poster.current;
+    return () => {
+      cancelAnimationFrame(raf);
+      const canvas = layer?.querySelector("canvas");
+      const gl = canvas?.getContext("webgl2") ?? canvas?.getContext("webgl");
+      if (!gl) return;
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      released.current = true;
+      gsap.set(layer, { autoAlpha: 0 });
+      gsap.set(posterEl, { autoAlpha: 1 });
+    };
+  }, []);
 
   // Cross-fade poster → live canvas once the first frame is drawn and the intro has finished.
   useEffect(() => {
@@ -276,7 +313,7 @@ export function HeroGlobe() {
           </div>
 
           <div ref={canvasLayer} className="invisible absolute inset-0 opacity-0">
-            {globe && <GlobeCanvas ctrl={ctrl} active={active} mobile={globe.mobile} />}
+            {globe && <GlobeCanvas key={canvasGen} ctrl={ctrl} active={active} mobile={globe.mobile} />}
           </div>
         </div>
 

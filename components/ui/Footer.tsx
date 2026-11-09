@@ -101,7 +101,7 @@ export function Footer() {
                 <Phone aria-hidden size={18} strokeWidth={1.5} className="mt-0.5 shrink-0 text-electric" />
                 <span className="flex flex-col">
                   {contact.phones.map((p) => (
-                    <a key={p.href} href={p.href} className="link-underline w-fit hover:text-white">
+                    <a key={p.href} href={p.href} className="link-underline inline-flex min-h-6 w-fit items-center hover:text-white">
                       {p.display}
                     </a>
                   ))}

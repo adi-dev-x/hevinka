@@ -115,19 +115,21 @@ export const vision = {
 export const industries = {
   title: ["Technology Adapted to", "Different Business Environments"],
   intro: "The same technology principles can be configured around different operating models, workflows and information needs.",
+  // TODO(content): the brochure only names the industries. The one-line "how it applies" texts and the
+  // related-solution mapping below were composed from the brochure's own module lists — needs client review.
   items: [
-    { title: "Construction & Engineering", icon: "building" },
-    { title: "Marine & Offshore", icon: "ship" },
-    { title: "Logistics & Transportation", icon: "truck" },
-    { title: "Equipment Rental", icon: "forklift" },
-    { title: "Trading & Distribution", icon: "shopping-cart" },
-    { title: "Manufacturing", icon: "factory" },
-    { title: "Retail", icon: "shopping-bag" },
-    { title: "Hospitality", icon: "concierge" },
-    { title: "Professional Services", icon: "briefcase" },
-    { title: "Real Estate & Facilities", icon: "building-2" },
-    { title: "Other Specialized Businesses", icon: "shapes" },
-  ] satisfies { title: string; icon: IconName }[],
+    { title: "Construction & Engineering", icon: "building", text: "Connect projects, procurement, equipment and site teams — with job tracking, asset management and reporting in one system.", solutions: ["erp-enterprise-solutions", "equipment-asset-rental-management", "logistics-fleet-transport-solutions"] },
+    { title: "Marine & Offshore", icon: "ship", text: "Keep equipment, maintenance schedules, inspection records and multi-location operations in one operating picture.", solutions: ["erp-enterprise-solutions", "equipment-asset-rental-management", "custom-software-applications"] },
+    { title: "Logistics & Transportation", icon: "truck", text: "Plan trips, dispatch vehicles, track deliveries and fleet maintenance, and bill accurately — from one connected platform.", solutions: ["logistics-fleet-transport-solutions", "business-automation-integration", "erp-enterprise-solutions"] },
+    { title: "Equipment Rental", icon: "forklift", text: "Track availability, bookings, contracts, deposits, inspections and utilization across the complete rental lifecycle.", solutions: ["equipment-asset-rental-management", "erp-enterprise-solutions", "crm-customer-solutions"] },
+    { title: "Trading & Distribution", icon: "shopping-cart", text: "Connect sales, inventory, procurement and accounting so stock, orders and payments stay in step.", solutions: ["erp-enterprise-solutions", "crm-customer-solutions", "web-ecommerce-solutions"] },
+    { title: "Manufacturing", icon: "factory", text: "Bring procurement, inventory, jobs and reporting together, with automated approvals and operational flows.", solutions: ["erp-enterprise-solutions", "business-automation-integration", "custom-software-applications"] },
+    { title: "Retail", icon: "shopping-bag", text: "Unify online sales, inventory and customer engagement — with WhatsApp and email communication connected.", solutions: ["web-ecommerce-solutions", "crm-customer-solutions", "digital-growth-optimization"] },
+    { title: "Hospitality", icon: "concierge", text: "Connect customer communication, operations and reporting so service stays consistent across every touchpoint.", solutions: ["crm-customer-solutions", "custom-software-applications", "digital-growth-optimization"] },
+    { title: "Professional Services", icon: "briefcase", text: "Manage clients, projects and billing with role-based portals and automated workflows.", solutions: ["crm-customer-solutions", "erp-enterprise-solutions", "business-automation-integration"] },
+    { title: "Real Estate & Facilities", icon: "building-2", text: "Track properties, assets, maintenance and contracts with centralized visibility and control.", solutions: ["erp-enterprise-solutions", "equipment-asset-rental-management", "custom-software-applications"] },
+    { title: "Other Specialized Businesses", icon: "shapes", text: "Where off-the-shelf software does not fit, we start with the business process and build around the real requirement.", solutions: ["custom-software-applications", "business-automation-integration", "erp-enterprise-solutions"] },
+  ] satisfies { title: string; icon: IconName; text: string; solutions: string[] }[],
 };
 
 // ---------------------------------------------------------------- Why HEVINKA (p.5)

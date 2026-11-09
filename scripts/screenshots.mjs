@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
 const base = process.argv[2] ?? "http://localhost:3000";
-const routes = process.argv.slice(3).length ? process.argv.slice(3) : ["/", "/playground"];
+const routes = process.argv.slice(3).length ? process.argv.slice(3) : ["/", "/about", "/approach", "/industries", "/contact", "/solutions/erp-enterprise-solutions"];
 const out = "qa-screenshots";
 mkdirSync(out, { recursive: true });
 

@@ -3,10 +3,11 @@
 import { clsx } from "clsx";
 import { Cloud, Monitor, Server, Settings, Settings2, Smartphone, Tablet, Truck } from "lucide-react";
 import { useRef } from "react";
-import { solutions } from "@/lib/content";
+import { ecosystem, solutions } from "@/lib/content";
 import { hubArc } from "@/lib/geo";
 import { gsap, loadMotionPath, useGSAP, MQ } from "@/lib/gsap";
 import { Icon } from "@/components/ui/Icon";
+import { LogoMark } from "@/components/ui/Logo";
 
 // Decorative solution visuals (brochure p.12–15). Each animates on enter and loops only while visible.
 
@@ -170,6 +171,114 @@ export function GrowthEngine({ className }: { className?: string }) {
       <div className="absolute left-1/2 top-1/2 w-[34%] -translate-x-1/2 -translate-y-1/2 text-center">
         <p className="font-display text-sm font-bold leading-tight text-white">Integrated Digital</p>
         <p className="font-display text-sm font-bold leading-tight text-electric">Growth Engine</p>
+      </div>
+    </div>
+  );
+}
+
+/** Integration wheel (automation) — the brochure's ecosystem nodes wired to a central HEVINKA hub. */
+export function IntegrationWheel({ className }: { className?: string }) {
+  const root = useRef<HTMLDivElement>(null);
+  const nodes = ecosystem.nodes;
+  useVisible(root, (loops) => {
+    gsap.from(".iw-node", { scale: 0.4, autoAlpha: 0, duration: 0.8, stagger: 0.07, ease: "back.out(1.8)", scrollTrigger: { trigger: root.current, start: "top 80%", toggleActions: "play none none none" } });
+    gsap.utils.toArray<HTMLElement>(".iw-pulse").forEach((p, i) =>
+      loops.push(
+        gsap.fromTo(p, { yPercent: i % 2 ? -100 : 300 }, { yPercent: i % 2 ? 300 : -100, duration: 1.6, repeat: -1, repeatDelay: 0.8, delay: i * 0.25, ease: "power1.inOut" }),
+      ),
+    );
+  });
+  return (
+    <div ref={root} className={clsx("relative mx-auto aspect-square w-full max-w-[520px]", className)} aria-hidden>
+      <div className="absolute inset-[12%] rounded-full border border-electric/15" />
+      {nodes.map((n, i) => {
+        const deg = (i / nodes.length) * 360;
+        const a = (deg - 90) * (Math.PI / 180);
+        return (
+          <div key={n.title}>
+            <div className="absolute left-1/2 top-1/2 h-[30%] w-px origin-top overflow-hidden" style={{ transform: `rotate(${deg + 180}deg)` }}>
+              <span className="absolute inset-0 bg-electric/30" />
+              <span className="iw-pulse absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-transparent via-ion to-transparent" />
+            </div>
+            <div
+              className="iw-node absolute flex w-[24%] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center"
+              style={{ left: `${50 + 38 * Math.cos(a)}%`, top: `${50 + 38 * Math.sin(a)}%` }}
+            >
+              <span className="grid size-11 place-items-center rounded-full border border-electric/60 bg-midnight text-ion shadow-[0_0_18px_rgb(0_168_252/0.35)] sm:size-13">
+                <Icon name={n.icon} size={20} />
+              </span>
+              <span className="mt-1.5 font-display text-[9px] font-semibold uppercase leading-tight tracking-wide text-white sm:text-[10px]">{n.title}</span>
+            </div>
+          </div>
+        );
+      })}
+      <div className="absolute left-1/2 top-1/2 grid size-[26%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-abyss shadow-[0_0_60px_rgb(0_168_252/0.5),inset_0_0_30px_rgb(0_168_252/0.3)] ring-2 ring-electric/70">
+        <span className="eco-spin absolute -inset-2 rounded-full border border-dashed border-ion/40" />
+        <LogoMark tone="white" className="h-[46%] w-auto" />
+      </div>
+    </div>
+  );
+}
+
+/** Web & e-commerce — a responsive browser + phone pair assembling an abstract storefront (no fake data). */
+export function WebDevices({ className }: { className?: string }) {
+  const root = useRef<HTMLDivElement>(null);
+  useVisible(root, (loops) => {
+    gsap.from(".wd-b", { y: 22, autoAlpha: 0, duration: 0.7, stagger: 0.05, ease: "hevinka", scrollTrigger: { trigger: root.current, start: "top 80%", toggleActions: "play none none none" } });
+    gsap.utils.toArray<HTMLElement>(".wd-bar").forEach((b, i) =>
+      loops.push(gsap.fromTo(b, { scaleY: 0.35 + (i % 3) * 0.2 }, { scaleY: 1, duration: 1.4 + (i % 4) * 0.3, repeat: -1, yoyo: true, ease: "sine.inOut", transformOrigin: "50% 100%" })),
+    );
+    loops.push(gsap.to(".wd-phone", { y: -12, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" }));
+    loops.push(gsap.fromTo(".wd-cta", { boxShadow: "0 0 0 rgba(0,168,252,0)" }, { boxShadow: "0 0 24px rgba(0,168,252,0.8)", duration: 1.2, repeat: -1, yoyo: true }));
+  });
+  const sk = "wd-b rounded bg-white/10";
+  return (
+    <div ref={root} className={clsx("relative mx-auto aspect-[10/9] w-full max-w-[560px]", className)} aria-hidden>
+      <div className="glass absolute left-0 top-[4%] w-[84%] overflow-hidden rounded-xl">
+        <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2.5">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className="size-2 rounded-full bg-white/25" />
+          ))}
+          <span className="ml-3 h-3 flex-1 rounded-full bg-white/10" />
+        </div>
+        <div className="grid gap-3 p-4">
+          <div className="wd-b flex h-20 flex-col justify-center gap-2 rounded-lg px-4 [background:var(--grad-brand)] sm:h-28">
+            <span className="h-2.5 w-1/2 rounded bg-white/80" />
+            <span className="h-2 w-1/3 rounded bg-white/50" />
+            <span className="wd-cta mt-1 h-5 w-20 rounded-full bg-abyss/60" />
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="wd-b rounded-lg bg-white/[0.06] p-2.5">
+                <span className="block aspect-[4/3] rounded bg-sky/25" />
+                <span className="mt-2 block h-1.5 w-3/4 rounded bg-white/25" />
+                <span className="mt-1.5 block h-1.5 w-1/2 rounded bg-electric/60" />
+              </div>
+            ))}
+          </div>
+          <div className="wd-b flex h-16 items-end gap-1.5 rounded-lg bg-white/[0.04] p-2.5">
+            {Array.from({ length: 14 }, (_, i) => (
+              <span key={i} className="wd-bar flex-1 rounded-sm bg-gradient-to-t from-royal to-electric" style={{ height: `${40 + ((i * 37) % 60)}%` }} />
+            ))}
+          </div>
+          <div className="hidden grid-cols-2 gap-3 sm:grid">
+            <span className={clsx(sk, "h-2")} />
+            <span className={clsx(sk, "h-2 w-2/3")} />
+          </div>
+        </div>
+      </div>
+      <div className="wd-phone absolute bottom-0 right-0 w-[31%] overflow-hidden rounded-[1.4rem] border border-electric/40 bg-midnight p-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8),0_0_30px_rgb(0_168_252/0.25)]">
+        <span className="mx-auto mb-2 block h-1 w-8 rounded-full bg-white/20" />
+        <div className="grid gap-2">
+          <span className="wd-b block aspect-square rounded-lg bg-sky/25" />
+          <span className="wd-b block h-1.5 w-3/4 rounded bg-white/30" />
+          <span className="wd-b block h-1.5 w-1/2 rounded bg-electric/60" />
+          <span className="wd-b block h-6 rounded-full [background:var(--grad-brand)]" />
+          <div className="grid grid-cols-2 gap-2">
+            <span className="wd-b block aspect-square rounded bg-white/10" />
+            <span className="wd-b block aspect-square rounded bg-white/10" />
+          </div>
+        </div>
       </div>
     </div>
   );

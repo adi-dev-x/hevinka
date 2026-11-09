@@ -1,0 +1,8 @@
+/ desktop                                                99 / 100 / 100 / 100 | LCP 0.8 s · TBT 50 ms · CLS 0
+/ mobile                                                 87 / 100 / 100 / 100 | LCP 3.9 s · TBT 120 ms · CLS 0
+/about desktop                                           100 / 100 / 100 / 100 | LCP 0.7 s · TBT 0 ms · CLS 0
+/about mobile                                            90 / 100 / 100 / 100 | LCP 3.3 s · TBT 150 ms · CLS 0
+/approach desktop                                        99 / 100 / 100 / 100 | LCP 0.7 s · TBT 10 ms · CLS 0
+/approach mobile                                         92 / 100 / 100 / 100 | LCP 3.2 s · TBT 110 ms · CLS 0
+/industries desktop                                      99 / 100 / 100 / 100 | LCP 0.8 s · TBT 0 ms · CLS 0
+/industries mobile                                       91 / 100 / 100 / 100 | LCP 3.2 s · TBT 170 ms · CLS 0
