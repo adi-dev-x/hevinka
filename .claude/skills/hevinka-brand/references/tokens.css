@@ -1,0 +1,95 @@
+/* HEVINKA design tokens — Tailwind CSS v4 (paste into app/globals.css) */
+@import "tailwindcss";
+
+@theme {
+  /* Core brand (from brochure) */
+  --color-abyss: #000e21;
+  --color-navy: #001c3d;
+  --color-midnight: #04224c;
+  --color-cobalt: #0047a8;
+  --color-royal: #0b5bd3;
+  --color-electric: #00a8fc;
+  --color-sky: #60a8e4;
+  --color-mist: #f4f7fb;
+  --color-ink: #0a1a33;
+  --color-slate: #5b6b85;
+  --color-haze: #9fb3d1;
+
+  /* Web evolution accents */
+  --color-ion: #7fe3ff;
+  --color-signal: #3d7bff;
+  --color-link-on-dark: #4cc3ff;
+
+  /* Fonts (set by next/font CSS variables in layout.tsx) */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Radii */
+  --radius-card: 1.25rem;
+  --radius-frame: 2rem;
+
+  /* Easing */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-cine: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Shadows / glows */
+  --shadow-glow: 0 0 40px rgb(0 168 252 / 0.35), 0 0 120px rgb(11 91 211 / 0.25);
+  --shadow-card-light: 0 10px 40px -12px rgb(11 91 211 / 0.18);
+  --shadow-card-dark: 0 20px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+:root {
+  --grad-brand: linear-gradient(135deg, #0047a8 0%, #0b5bd3 45%, #00a8fc 100%);
+  --grad-night: radial-gradient(120% 80% at 70% 0%, #0b3a80 0%, #001c3d 45%, #000e21 100%);
+  --grad-text: linear-gradient(90deg, #00a8fc, #7fe3ff 60%, #0b5bd3);
+  --glass-dark: rgb(4 34 76 / 0.55);
+  --glass-border: rgb(127 227 255 / 0.15);
+
+  /* Signature diagonal cuts */
+  --cut-bottom-right: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  --cut-bottom-left: polygon(0 0, 100% 0, 100% 100%, 0 88%);
+  --cut-top-left: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility text-gradient {
+  background: var(--grad-text);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glass {
+  background: var(--glass-dark);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+@utility brand-bar {
+  display: block;
+  width: 4rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--grad-brand);
+}
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+html { background: var(--color-abyss); color: white; }
+::selection { background: var(--color-electric); color: var(--color-abyss); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

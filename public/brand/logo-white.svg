@@ -1,0 +1,6 @@
+<!-- RECREATION of the HEVINKA logo for client approval. Replace with the original vector artwork. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 150">
+<g transform="translate(4 4) scale(0.345) translate(-10 -8)"><path d="M80 280C86 252 108 238 136 224C136 270 134 300 128 322C116 355 78 372 16 375C54 356 74 333 80 310C84 298 78 290 80 280Z" fill="#fff"/><path d="M145 205C152 172 186 156 220 146C220 222 218 290 212 320C202 365 152 392 52 396C112 372 140 335 144 285C147 250 140 225 145 205Z" fill="#fff"/><path d="M230 84C236 50 272 28 306 14C304 120 304 250 300 300C294 360 252 400 138 412C196 384 226 340 230 270C233 200 226 120 230 84Z" fill="#fff"/></g>
+<text x="128" y="84" font-family="Sora, Poppins, Arial, sans-serif" font-weight="700" font-size="84" letter-spacing="2" fill="#fff">HEVINKA</text>
+<text x="131" y="116" font-family="Sora, Poppins, Arial, sans-serif" font-weight="500" font-size="24.5" letter-spacing="1.6" fill="#ffffff">TECHNOLOGIES PRIVATE LIMITED</text>
+<rect x="131" y="128" width="470" height="2.5" fill="#00a8fc"/></svg>

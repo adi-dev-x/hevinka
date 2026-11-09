@@ -1,0 +1,318 @@
+/* HEVINKA design tokens — from .claude/skills/hevinka-brand/references/tokens.css */
+@import "tailwindcss";
+
+@theme {
+  /* Core brand (from brochure) */
+  --color-abyss: #000e21;
+  --color-navy: #001c3d;
+  --color-midnight: #04224c;
+  --color-cobalt: #0047a8;
+  --color-royal: #0b5bd3;
+  --color-electric: #00a8fc;
+  --color-sky: #60a8e4;
+  --color-mist: #f4f7fb;
+  --color-ink: #0a1a33;
+  --color-slate: #5b6b85;
+  --color-haze: #9fb3d1;
+
+  /* Web evolution accents */
+  --color-ion: #7fe3ff;
+  --color-signal: #3d7bff;
+  --color-link-on-dark: #4cc3ff;
+
+  /* Fonts (set by next/font CSS variables in layout.tsx) */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Radii */
+  --radius-card: 1.25rem;
+  --radius-frame: 2rem;
+
+  /* Easing */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-cine: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Shadows / glows */
+  --shadow-glow: 0 0 40px rgb(0 168 252 / 0.35), 0 0 120px rgb(11 91 211 / 0.25);
+  --shadow-card-light: 0 10px 40px -12px rgb(11 91 211 / 0.18);
+  --shadow-card-dark: 0 20px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+:root {
+  --grad-brand: linear-gradient(135deg, #0047a8 0%, #0b5bd3 45%, #00a8fc 100%);
+  --grad-night: radial-gradient(120% 80% at 70% 0%, #0b3a80 0%, #001c3d 45%, #000e21 100%);
+  --grad-text: linear-gradient(90deg, #00a8fc, #7fe3ff 60%, #0b5bd3);
+  --glass-dark: rgb(4 34 76 / 0.55);
+  --glass-border: rgb(127 227 255 / 0.15);
+
+  /* Signature diagonal cuts */
+  --cut-bottom-right: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  --cut-bottom-left: polygon(0 0, 100% 0, 100% 100%, 0 88%);
+  --cut-top-left: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+
+  /* Fixed-depth cuts (px based so the slope stays ~6–8° on any section height) */
+  --cut: clamp(48px, 7vw, 120px);
+
+  --nav-h: 76px;
+}
+
+@utility text-gradient {
+  background: var(--grad-text);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glass {
+  background: var(--glass-dark);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+@utility brand-bar {
+  display: block;
+  width: 4rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--grad-brand);
+}
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* ---------- Type scale ---------- */
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 10.5vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+@utility h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+@utility h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  line-height: 1.25;
+}
+@utility body-lg {
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+/* ---------- Signature diagonal cuts ---------- */
+@utility cut-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), 0 100%);
+}
+@utility cut-bl {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--cut)));
+}
+@utility cut-tl {
+  clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%);
+}
+@utility cut-tr {
+  clip-path: polygon(0 0, 100% var(--cut), 100% 100%, 0 100%);
+}
+/* Chevron "arrow tab" (Vision/Mission cards, approach tiles) */
+@utility chevron {
+  clip-path: polygon(0 0, calc(100% - 1.25rem) 0, 100% 50%, calc(100% - 1.25rem) 100%, 0 100%);
+}
+/* Rounded-diagonal frame (cover page globe frame) — used with rounded corners */
+@utility frame-diag {
+  clip-path: polygon(18% 0, 100% 0, 100% 82%, 82% 100%, 0 100%, 0 18%);
+}
+
+/* Sliding underline for inline links */
+@utility link-underline {
+  background-image: linear-gradient(90deg, var(--color-electric), var(--color-ion));
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-expo);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+    background-position: 0% 100%;
+  }
+}
+
+/* ---------- Base ---------- */
+html {
+  background: var(--color-abyss);
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--color-abyss);
+  overflow-x: clip;
+}
+::selection {
+  background: var(--color-electric);
+  color: var(--color-abyss);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Visible focus ring everywhere (keyboard only) */
+:focus-visible {
+  outline: 2px solid var(--color-ion);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Prevent FOUC for JS-animated elements (content stays visible without JS) */
+html.js .reveal {
+  visibility: hidden;
+}
+
+/* Preloader: shown only on first visit (class set by the inline head script) */
+html.preload {
+  overflow: hidden;
+}
+html.preload .preloader {
+  display: block;
+  /* Failsafe: never block the site if JS stalls */
+  animation: preloader-failsafe 0.4s 5s forwards;
+}
+@keyframes preloader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Custom cursor hides the native one only on fine pointers with motion allowed */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button {
+    cursor: none;
+  }
+}
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: var(--color-electric);
+  color: var(--color-abyss);
+  font-weight: 700;
+  transition: top 0.2s var(--ease-expo);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* CSS marquee loop */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Hero: scroll indicator dot travelling down its line */
+.scroll-dot {
+  animation: scroll-dot 2.2s var(--ease-in-out-cine) infinite;
+}
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(300%);
+  }
+}
+
+/* Globe poster fallback: soft pulse on hub dots (reduced motion / no WebGL only) */
+.hub-pulse {
+  width: var(--s);
+  height: var(--s);
+  background: radial-gradient(circle, #bff3ff 0 25%, rgb(127 227 255 / 0.5) 26% 45%, transparent 46%);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-pulse {
+    opacity: 1;
+  }
+}
+.no-webgl .hub-pulse {
+  opacity: 1;
+  animation: hub-pulse 2.4s ease-in-out infinite;
+}
+@keyframes hub-pulse {
+  50% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0.4;
+  }
+}
+
+/* Ecosystem core: rotating glow ring */
+.eco-spin {
+  animation: spin 9s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Slow gradient-text shimmer */
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
